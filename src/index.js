@@ -16,5 +16,5 @@ app.get("/ping", (req, res) => {
 app.use(errorHandler);
 app.listen(PORT, async () => {
   console.log(`Server started on port ${PORT}`);
-  connectDB();
+  await connectDB();
 });

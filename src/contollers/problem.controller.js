@@ -1,42 +1,69 @@
+const NotImplemented = require("../errors/notImplemented.error");
+const { ProblemService } = require("../services");
+const { ProblemRepository } = require("../repositories");
 const { StatusCodes } = require("http-status-codes");
-const newImplementedError = require("../errors/notimplemented.error");
-const badRequest = require("../errors/badrequest.error");
-const internalServerError = require("../errors/internerServer.error");
-function addProblem(req, res, next) {
+
+const problemService = new ProblemService(new ProblemRepository());
+
+function pingProblemController(req, res) {
+  return res.json({ message: "Problem controller is up" });
+}
+
+async function addProblem(req, res, next) {
   try {
-    {
-      // Your logic to add a problem
-      throw new internalServerError("addProblem");
-    }
+    console.log("incoming req body", req.body);
+    const newproblem = await problemService.createProblem(req.body);
+    return res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "Successfully created a new problem",
+      error: {},
+      data: newproblem,
+    });
   } catch (error) {
     next(error);
   }
 }
-function getAllProblems(req, res) {
-  res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "All problems retrieved successfully" });
+
+function getProblem(req, res, next) {
+  try {
+    throw new NotImplemented("Add Problem");
+  } catch (error) {
+    next(error);
+  }
 }
-function getProblem(req, res) {
-  res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "Problem retrieved successfully" });
+
+function getProblems(req, res, next) {
+  try {
+    // nothing implemented
+    throw new NotImplemented("Add Problem");
+  } catch (error) {
+    next(error);
+  }
 }
-function updateProblem(req, res) {
-  res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "Problem updated successfully" });
+
+function deleteProblem(req, res, next) {
+  try {
+    // nothing implemented
+    throw new NotImplemented("Add Problem");
+  } catch (error) {
+    next(error);
+  }
 }
-function deleteProblem(req, res) {
-  res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "Problem deleted successfully" });
+
+function updateProblem(req, res, next) {
+  try {
+    // nothing implemented
+    throw new NotImplemented("Add Problem");
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {
   addProblem,
-  getAllProblems,
   getProblem,
-  updateProblem,
+  getProblems,
   deleteProblem,
+  updateProblem,
+  pingProblemController,
 };
